@@ -1,7 +1,3 @@
-# ESBuild Template for p5.js
+# Tower Defense Game
 
-- Gulp
-- TypeScript
-- Browser reloading
-
-[Use this template](https://github.com/ESBuildTemplates/ts-p5/generate)
+Written TypeScript with p5.js

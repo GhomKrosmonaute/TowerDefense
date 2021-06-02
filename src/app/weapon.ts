@@ -2,8 +2,10 @@ import * as enemy from "./enemy"
 import * as space from "./space"
 import * as sprite from "./sprite"
 
-export const defaultEffect: WeaponEffect = (weapon, enemy) => {
-  enemy.life -= weapon.damage
+import Game from "../game"
+
+export const defaultEffect: WeaponEffect = (game, weapon, enemy) => {
+  enemy.life -= weapon.damage * game.damageMultiplier
 }
 
 export const weapons: BaseWeapon[] = [
@@ -49,4 +51,8 @@ export function isWeapon(item: space.Positionable): item is Weapon {
   return "base" in item && "level" in item
 }
 
-export type WeaponEffect = (weapon: WeaponLevel, enemy: enemy.Enemy) => unknown
+export type WeaponEffect = (
+  game: Game,
+  weapon: WeaponLevel,
+  enemy: enemy.Enemy
+) => unknown

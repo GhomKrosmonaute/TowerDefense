@@ -1,11 +1,19 @@
+import Game from "../game"
 import * as space from "./space"
 
+export interface BaseEnemy {
+  life: number
+  speed: number
+  gain: number
+  onUpdate?: (this: Enemy) => unknown
+  onKill?: (this: Enemy) => unknown
+}
+
 export class Enemy implements space.Positionable, space.Displayable {
-  constructor(
-    private _life: number,
-    public position: space.Vector,
-    public zIndex: number
-  ) {}
+  zIndex = 1
+  private _life = 0
+
+  constructor(public position: space.Vector, public readonly base: BaseEnemy) {}
 
   get life(): number {
     return this._life
@@ -16,7 +24,12 @@ export class Enemy implements space.Positionable, space.Displayable {
   }
 
   kill() {
+    this.base.onKill?.bind(this)()
     space.board.delete(this)
+  }
+
+  update() {
+    this.base.onUpdate?.bind(this)()
   }
 
   draw() {}

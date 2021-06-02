@@ -1,7 +1,9 @@
 /// @ts-check
 /// <reference path="../node_modules/@types/p5/global.d.ts" />
 
-import Game from "./app/game"
+import * as clock from "./app/clock"
+
+import Game from "./game"
 
 document.addEventListener("contextmenu", (event) => event.preventDefault())
 
@@ -14,6 +16,8 @@ export function setup() {
   )
 
   game = new Game()
+
+  clock.tick.bind(game.update.bind(game))()
 }
 
 export function draw() {

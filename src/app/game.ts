@@ -9,7 +9,9 @@ export default class Game {
     space.board.clear()
   }
 
-  buyWeapon() {}
+  buyWeapon() {
+  
+  }
 
   upgradeWeapon(item: weapon.Weapon): boolean {
     const nextLevel = item.base[item.level + 1]
@@ -19,5 +21,13 @@ export default class Game {
     return true
   }
 
-  draw() {}
+  draw() {
+    space
+      .arrayBoard()
+      .filter((item): item is space.Positionable & space.Displayable =>
+        space.isDisplayable(item)
+      )
+      .sort((a, b) => a.zIndex - b.zIndex)
+      .forEach((item) => item.draw())
+  }
 }

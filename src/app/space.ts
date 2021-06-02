@@ -33,3 +33,7 @@ export interface Displayable {
   zIndex: number
   draw(): unknown
 }
+
+export function isDisplayable(item: object): item is Displayable {
+  return "zIndex" in item && "draw" in item
+}

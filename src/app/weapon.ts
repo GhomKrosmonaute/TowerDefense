@@ -40,7 +40,7 @@ export function resolve(weapon: Weapon): WeaponLevel {
   return weapon.base[weapon.level]
 }
 
-export interface Weapon extends space.Positionable {
+export interface Weapon extends space.Positionable, space.Displayable {
   base: BaseWeapon
   level: number
 }

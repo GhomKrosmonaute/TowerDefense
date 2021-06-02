@@ -16,7 +16,7 @@ export const weapons: BaseWeapon[] = [
       range: 10,
       sellCost: 10,
       sprite: sprite.defaultSprite,
-      critical: 0.1, // une chance sur deux de faire un critique
+      critical: 0.1, // une chance sur dix de faire un critique
       effect: defaultEffect,
     },
   ],

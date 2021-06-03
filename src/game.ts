@@ -37,14 +37,7 @@ export default class Game {
 
     drawBoard()
     drawSelectionRect()
-
-    space
-      .arrayBoard()
-      .filter((item): item is space.Positionable & space.Displayable =>
-        space.isDisplayable(item)
-      )
-      .sort((a, b) => a.zIndex - b.zIndex)
-      .forEach((item) => item.draw())
+    drawPositionableItems()
   }
 }
 
@@ -59,4 +52,14 @@ function drawBoard() {
   strokeWeight(2)
   fill(20)
   rect(...space.boardPosition(), ...space.boardSize)
+}
+
+function drawPositionableItems(){
+  space
+    .arrayBoard()
+    .filter((item): item is space.Positionable & space.Displayable =>
+      space.isDisplayable(item)
+    )
+    .sort((a, b) => a.zIndex - b.zIndex)
+    .forEach((item) => item.draw())
 }

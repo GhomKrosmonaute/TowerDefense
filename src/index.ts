@@ -26,3 +26,7 @@ export function draw() {
 
 export function keyPressed() {}
 export function keyReleased() {}
+
+export function windowResized() {
+  resizeCanvas(windowWidth, windowHeight)
+}

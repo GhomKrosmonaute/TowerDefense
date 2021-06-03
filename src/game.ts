@@ -33,8 +33,11 @@ export default class Game {
   update(info: clock.TimeInfo) {}
 
   draw() {
+    background(0)
+
+    drawBoard()
     drawSelectionRect()
-    
+
     space
       .arrayBoard()
       .filter((item): item is space.Positionable & space.Displayable =>
@@ -46,7 +49,14 @@ export default class Game {
 }
 
 function drawSelectionRect() {
-  background(0)
+  noStroke()
+  fill(40)
+  rect(...space.boardMouse(), ...space.boxSize)
+}
+
+function drawBoard() {
+  stroke(50)
+  strokeWeight(2)
   fill(20)
-  rect(...space.sticky(space.mouse()), ...space.boxSize)
+  rect(...space.boardPosition(), ...space.boardSize)
 }

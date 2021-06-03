@@ -1,11 +1,14 @@
 export const board = new Set<Positionable>()
 export const boxSize: Vector = [48, 48]
-export const boardPosition: Vector = [0, 0]
-export const boardBoxes: Vector = [20, 20]
+export const boardBoxes: Vector = [15, 10]
 export const boardSize: Vector = [
   boxSize[0] * boardBoxes[0],
   boxSize[1] * boardBoxes[1],
 ]
+
+export function boardPosition(): Vector {
+  return sticky([width / 2 - boardSize[0] / 2, height / 2 - boardSize[1] / 2])
+}
 
 export function arrayBoard() {
   return [...board]
@@ -14,7 +17,7 @@ export function arrayBoard() {
 export type Vector = [x: number, y: number]
 
 export function sticky(v: Vector): Vector {
-  return sub(floor(div(v, boxSize)), boxSize)
+  return mult(floor(div(v, boxSize)), boxSize)
 }
 
 export function mouse(): Vector {
@@ -22,7 +25,20 @@ export function mouse(): Vector {
 }
 
 export function boardMouse(): Vector {
-  return add(mouse(), boardPosition)
+  return sticky(
+    max(
+      min(mouse(), sub(add(boardPosition(), boardSize), [1, 1])),
+      boardPosition()
+    )
+  )
+}
+
+export function min(v1: Vector, v2: Vector): Vector {
+  return [Math.min(v1[0], v2[0]), Math.min(v1[1], v2[1])]
+}
+
+export function max(v1: Vector, v2: Vector): Vector {
+  return [Math.max(v1[0], v2[0]), Math.max(v1[1], v2[1])]
 }
 
 export function add(v1: Vector, v2: Vector): Vector {
@@ -30,11 +46,15 @@ export function add(v1: Vector, v2: Vector): Vector {
 }
 
 export function sub(v1: Vector, v2: Vector): Vector {
-  return [v1[0] * v2[0], v1[1] * v2[1]]
+  return [v1[0] - v2[0], v1[1] - v2[1]]
 }
 
 export function div(v1: Vector, v2: Vector): Vector {
   return [v1[0] / v2[0], v1[1] / v2[1]]
+}
+
+export function mult(v1: Vector, v2: Vector): Vector {
+  return [v1[0] * v2[0], v1[1] * v2[1]]
 }
 
 export function floor(v: Vector): Vector {

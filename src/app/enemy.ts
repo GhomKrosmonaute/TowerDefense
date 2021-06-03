@@ -10,8 +10,10 @@ export interface BaseEnemy {
 }
 
 export class Enemy implements space.Positionable, space.Displayable {
-  zIndex = 1
   private _life = 0
+
+  zIndex = 1
+  gridSlave = false
 
   constructor(public position: space.Vector, public readonly base: BaseEnemy) {}
 

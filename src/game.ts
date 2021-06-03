@@ -33,9 +33,8 @@ export default class Game {
   update(info: clock.TimeInfo) {}
 
   draw() {
-    background(0)
-    fill(255)
-    ellipse(...space.sticky(space.mouse()), ...space.boxSize)
+    drawSelectionRect()
+    
     space
       .arrayBoard()
       .filter((item): item is space.Positionable & space.Displayable =>
@@ -44,4 +43,10 @@ export default class Game {
       .sort((a, b) => a.zIndex - b.zIndex)
       .forEach((item) => item.draw())
   }
+}
+
+function drawSelectionRect() {
+  background(0)
+  fill(20)
+  rect(...space.sticky(space.mouse()), ...space.boxSize)
 }

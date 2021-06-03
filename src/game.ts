@@ -33,6 +33,9 @@ export default class Game {
   update(info: clock.TimeInfo) {}
 
   draw() {
+    background(0)
+    fill(255)
+    ellipse(...space.sticky(space.mouse()), ...space.boxSize)
     space
       .arrayBoard()
       .filter((item): item is space.Positionable & space.Displayable =>

@@ -1,12 +1,27 @@
 export const board = new Set<Positionable>()
-
 export const boxSize: Vector = [48, 48]
+export const boardBoxes: Vector = [20, 20]
+export const boardSize: Vector = [
+  boxSize[0] * boardBoxes[0],
+  boxSize[1] * boardBoxes[1],
+]
 
 export function arrayBoard() {
   return [...board]
 }
 
 export type Vector = [x: number, y: number]
+
+export function sticky(position: Vector): Vector {
+  return [
+    Math.floor(position[0] / boxSize[0]) * boxSize[0],
+    Math.floor(position[1] / boxSize[1]) * boxSize[1],
+  ]
+}
+
+export function mouse(): Vector {
+  return [mouseX, mouseY]
+}
 
 export function clone(position: Vector): Vector {
   return [position[0], position[1]]

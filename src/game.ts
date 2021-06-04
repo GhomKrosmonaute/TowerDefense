@@ -3,6 +3,7 @@ import * as power from "./app/power"
 import * as bonus from "./app/bonus"
 import * as space from "./app/space"
 import * as clock from "./app/clock"
+import * as shop from "./app/shop"
 
 export default class Game {
   life = 20
@@ -11,6 +12,7 @@ export default class Game {
   time = 0
   bonuses = []
 
+  selectedTower?: tower.BaseTower
   pressedAt?: space.Vector
 
   private lastTimeGiven = Date.now()
@@ -31,6 +33,8 @@ export default class Game {
     drawBoard()
     drawSelectionRect()
     drawPositionableItems()
+
+    shop.draw(this.selectedTower)
   }
 
   keyPressed() {}
@@ -42,18 +46,35 @@ export default class Game {
   }
 
   mouseReleased() {
-    const releasedAt = space.stickyMouse()
+    const selection = shop.getSelection()
 
-    if (this.pressedAt?.toString() === releasedAt.toString()) {
-      space.place(new tower.Tower(this, space.stickyMouse(), tower.towers[0]))
+    if (selection) {
+      this.selectedTower = selection
+    } else {
+      const releasedAt = space.stickyMouse()
+
+      if (
+        this.pressedAt?.toString() === releasedAt.toString() &&
+        this.selectedTower
+      ) {
+        if (
+          !space
+            .arrayBoard()
+            .some((item) =>
+              space.isSuperimposed(
+                space.surface(releasedAt),
+                space.surface(item.position)
+              )
+            )
+        ) {
+          space.board.add(
+            new tower.Tower(this, space.stickyMouse(), this.selectedTower)
+          )
+          //delete this.selectedTower
+        }
+      }
     }
   }
-}
-
-function drawSelectionRect() {
-  noStroke()
-  fill(40)
-  rect(...space.stickyMouse(), ...space.boxSize)
 }
 
 function drawBoard() {
@@ -61,6 +82,12 @@ function drawBoard() {
   strokeWeight(2)
   fill(20)
   rect(...space.boardPosition(), ...space.boardSize)
+}
+
+function drawSelectionRect() {
+  noStroke()
+  fill(40)
+  rect(...space.stickyMouse(), ...space.boxSize)
 }
 
 function drawPositionableItems() {

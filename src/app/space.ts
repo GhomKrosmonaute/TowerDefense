@@ -64,14 +64,44 @@ export function floor(v: Vector): Vector {
   return [Math.floor(v[0]), Math.floor(v[1])]
 }
 
-export function clone(position: Vector): Vector {
-  return add(position, [0, 0])
+export function clone(v: Vector): Vector {
+  return add(v, [0, 0])
+}
+
+export function center(v: Vector): Vector {
+  return add(v, div(boxSize, [2, 2]))
+}
+
+export function surface(v: Vector): Surface {
+  const shift = div(boxSize, [3, 3])
+  return [
+    sticky(clone(v)), // middle
+    sticky(add(v, shift)), // bottom right
+    sticky(sub(v, shift)), // top left
+    sticky([v[0], v[1] - shift[1]]), // top
+    sticky([v[0], v[1] + shift[1]]), // bottom
+    sticky([v[0] - shift[0], v[1]]), // left
+    sticky([v[0] + shift[0], v[1]]), // right
+    sticky([v[0] - shift[0], v[1] + shift[0]]), // bottom left
+    sticky([v[0] + shift[0], v[1] - shift[0]]), // top right
+  ]
+}
+
+export function isSuperimposed(s1: Surface, s2: Surface): boolean {
+  return s1.some((v1) => s2.some((v2) => v1.toString() === v2.toString()))
 }
 
 export interface Positionable {
   gridSlave: boolean
   position: Vector
 }
+
+// prettier-ignore
+export type Surface = [
+  Vector, Vector, Vector,
+  Vector, Vector, Vector,
+  Vector, Vector, Vector
+]
 
 export function getGridSlaveAt(at: Vector): Positionable | undefined {
   return arrayBoard().find(
@@ -85,20 +115,6 @@ export function getItemsAt(at: Vector): Positionable[] {
   return arrayBoard().filter(
     (item) => sticky(item.position).toString() === sticky(at).toString()
   )
-}
-
-export function place(item: Positionable) {
-  if (item.gridSlave)
-    arrayBoard().forEach((boardItem) => {
-      if (
-        boardItem.gridSlave &&
-        boardItem.position.toString() === item.position.toString()
-      ) {
-        board.delete(boardItem)
-      }
-    })
-
-  board.add(item)
 }
 
 export interface Displayable {

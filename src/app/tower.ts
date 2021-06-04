@@ -49,10 +49,6 @@ export class Tower implements space.Positionable, space.Displayable {
     return this.base[this._level]
   }
 
-  get center(): space.Vector {
-    return space.add(this.position, space.div(space.boxSize, [2, 2]))
-  }
-
   constructor(
     public game: Game,
     public position: space.Vector,
@@ -74,14 +70,14 @@ export class Tower implements space.Positionable, space.Displayable {
   draw() {
     if (this.position.toString() === space.stickyMouse().toString())
       this.drawRange()
-    this.level.sprite(this.angle, this.center)
+    this.level.sprite(this.angle, this.position)
   }
 
   drawRange() {
     strokeWeight(2)
     stroke(255, 215, 0, 50)
     fill(255, 215, 0, 30)
-    circle(...this.center, this.level.range * 2)
+    circle(...space.center(this.position), this.level.range * 2)
   }
 }
 

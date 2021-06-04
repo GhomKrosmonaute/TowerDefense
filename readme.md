@@ -1,3 +1,3 @@
 # Tower Defense Game
 
-Written TypeScript with p5.js
+Written in TypeScript with p5.js

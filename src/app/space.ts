@@ -17,7 +17,10 @@ export function arrayBoard() {
 export type Vector = [x: number, y: number]
 
 export function sticky(v: Vector): Vector {
-  return mult(floor(div(v, boxSize)), boxSize)
+  return mult(
+    floor(div(sub(v, div(boxSize, [3, 3])), div(boxSize, [2, 2]))),
+    div(boxSize, [2, 2])
+  )
 }
 
 export function mouse(): Vector {
@@ -27,8 +30,8 @@ export function mouse(): Vector {
 export function boardMouse(): Vector {
   return sticky(
     max(
-      min(mouse(), sub(add(boardPosition(), boardSize), [1, 1])),
-      boardPosition()
+      min(mouse(), sub(add(boardPosition(), boardSize), div(boxSize, [3, 3]))),
+      add(boardPosition(), div(boxSize, [3, 3]))
     )
   )
 }
@@ -70,18 +73,21 @@ export interface Positionable {
   position: Vector
 }
 
-export function getAt(
-  at: Vector,
-  gridSlave?: boolean
-): Positionable | undefined {
+export function getGridSlaveAt(at: Vector): Positionable | undefined {
   return arrayBoard().find(
     (item) =>
-      (gridSlave === undefined || item.gridSlave === gridSlave) &&
-      item.position.toString() === at.toString()
+      item.gridSlave &&
+      sticky(item.position).toString() === sticky(at).toString()
   )
 }
 
-export function setAt(item: Positionable) {
+export function getItemsAt(at: Vector): Positionable[] {
+  return arrayBoard().filter(
+    (item) => sticky(item.position).toString() === sticky(at).toString()
+  )
+}
+
+export function place(item: Positionable) {
   if (item.gridSlave)
     arrayBoard().forEach((boardItem) => {
       if (

@@ -7,6 +7,7 @@ import * as clock from "./app/clock"
 export default class Game {
   life = 20
   money = 100
+  score = 0
   time = 0
   bonuses = []
 
@@ -54,7 +55,7 @@ function drawBoard() {
   rect(...space.boardPosition(), ...space.boardSize)
 }
 
-function drawPositionableItems(){
+function drawPositionableItems() {
   space
     .arrayBoard()
     .filter((item): item is space.Positionable & space.Displayable =>

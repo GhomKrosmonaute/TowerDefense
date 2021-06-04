@@ -24,8 +24,12 @@ export function draw() {
   game.draw()
 }
 
-export function keyPressed() {}
-export function keyReleased() {}
+export function keyPressed() {
+  game.keyPressed()
+}
+export function keyReleased() {
+  game.keyReleased()
+}
 
 export function windowResized() {
   resizeCanvas(windowWidth, windowHeight)

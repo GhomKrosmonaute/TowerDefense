@@ -1,4 +1,6 @@
 import * as space from "./space"
+import * as sprite from "./sprite"
+
 import Game from "../game"
 
 export const defaultOnKill: EnemyHook = (enemy) => {
@@ -13,6 +15,7 @@ export const enemies: BaseEnemy[] = [
     gain: 1,
     speed: 5,
     onKill: defaultOnKill,
+    sprite: sprite.defaultEnemySprite,
   },
 ]
 
@@ -23,6 +26,7 @@ export interface BaseEnemy {
   gain: number
   onUpdate?: EnemyHook
   onKill: EnemyHook
+  sprite: sprite.Sprite
 }
 
 export type EnemyHook = (enemy: Enemy) => unknown

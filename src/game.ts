@@ -1,4 +1,4 @@
-import * as weapon from "./app/weapon"
+import * as tower from "./app/tower"
 import * as power from "./app/power"
 import * as bonus from "./app/bonus"
 import * as space from "./app/space"
@@ -21,16 +21,6 @@ export default class Game {
     space.board.clear()
   }
 
-  buyWeapon() {}
-
-  upgradeWeapon(item: weapon.Weapon): boolean {
-    const nextLevel = item.base[item.level + 1]
-    if (!nextLevel) return false
-    this.money -= nextLevel.cost
-    item.level++
-    return true
-  }
-
   update(info: clock.TimeInfo) {}
 
   draw() {
@@ -40,12 +30,18 @@ export default class Game {
     drawSelectionRect()
     drawPositionableItems()
   }
+
+  keyPressed() {
+    space.place(new tower.Tower(this, space.stickyMouse(), tower.towers[0]))
+  }
+
+  keyReleased() {}
 }
 
 function drawSelectionRect() {
   noStroke()
   fill(40)
-  rect(...space.boardMouse(), ...space.boxSize)
+  rect(...space.stickyMouse(), ...space.boxSize)
 }
 
 function drawBoard() {

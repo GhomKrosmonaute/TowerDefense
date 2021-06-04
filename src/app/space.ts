@@ -27,7 +27,7 @@ export function mouse(): Vector {
   return [mouseX, mouseY]
 }
 
-export function boardMouse(): Vector {
+export function stickyMouse(): Vector {
   return sticky(
     max(
       min(mouse(), sub(add(boardPosition(), boardSize), div(boxSize, [3, 3]))),

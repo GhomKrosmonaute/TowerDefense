@@ -11,6 +11,8 @@ export default class Game {
   time = 0
   bonuses = []
 
+  pressedAt?: space.Vector
+
   private lastTimeGiven = Date.now()
 
   get damageMultiplier(): number {
@@ -31,11 +33,21 @@ export default class Game {
     drawPositionableItems()
   }
 
-  keyPressed() {
-    space.place(new tower.Tower(this, space.stickyMouse(), tower.towers[0]))
-  }
+  keyPressed() {}
 
   keyReleased() {}
+
+  mousePressed() {
+    this.pressedAt = space.stickyMouse()
+  }
+
+  mouseReleased() {
+    const releasedAt = space.stickyMouse()
+
+    if (this.pressedAt?.toString() === releasedAt.toString()) {
+      space.place(new tower.Tower(this, space.stickyMouse(), tower.towers[0]))
+    }
+  }
 }
 
 function drawSelectionRect() {

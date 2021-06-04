@@ -15,7 +15,7 @@ export const towers: BaseTower[] = [
       cost: 5,
       rate: 0.5 / 60, // un tir toutes les deux secondes
       damage: 10,
-      range: 10,
+      range: space.boxSize[0] * 3,
       sellCost: 10,
       sprite: sprite.defaultTowerSprite,
       critical: 0.1, // une chance sur dix de faire un critique
@@ -43,10 +43,14 @@ export class Tower implements space.Positionable, space.Displayable {
 
   zIndex = 1
   angle = 0
-  gridSlave = false
+  gridSlave = true
 
   get level(): TowerLevel {
     return this.base[this._level]
+  }
+
+  get center(): space.Vector {
+    return space.add(this.position, space.div(space.boxSize, [2, 2]))
   }
 
   constructor(
@@ -63,10 +67,21 @@ export class Tower implements space.Positionable, space.Displayable {
     return true
   }
 
-  update() {}
+  update() {
+    // shot enemies
+  }
 
   draw() {
-    this.level.sprite(this.angle, this.position)
+    if (this.position.toString() === space.stickyMouse().toString())
+      this.drawRange()
+    this.level.sprite(this.angle, this.center)
+  }
+
+  drawRange() {
+    strokeWeight(2)
+    stroke(255, 215, 0, 50)
+    fill(255, 215, 0, 30)
+    circle(...this.center, this.level.range * 2)
   }
 }
 

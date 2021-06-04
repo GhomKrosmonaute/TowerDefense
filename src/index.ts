@@ -31,6 +31,13 @@ export function keyReleased() {
   game.keyReleased()
 }
 
+export function mousePressed() {
+  game.mousePressed()
+}
+export function mouseReleased() {
+  game.mouseReleased()
+}
+
 export function windowResized() {
   resizeCanvas(windowWidth, windowHeight)
 }

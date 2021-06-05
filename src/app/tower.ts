@@ -8,17 +8,100 @@ export const defaultEffect: TowerEffect = (game, weapon, enemy) => {
   enemy.life -= weapon.damage * game.damageMultiplier
 }
 
+export const towerRates = {
+  slow: 0.5 / 60, // un tir toutes les deux secondes
+}
+
+export const towerRanges = {
+  60: space.boxSize[0] * 3,
+  180: space.boxSize[0] * 7,
+}
+
 export const towers: BaseTower[] = [
   [
     {
+      // 0
       name: "Pellet",
       cost: 5,
-      rate: 0.5 / 60, // un tir toutes les deux secondes
+      rate: towerRates.slow,
       damage: 10,
+      range: towerRanges["60"],
+      sellCost: 3,
+      sprite: sprite.defaultTowerSprite,
+      critical: 0.1, // une chance sur dix de faire un critique
+      effect: defaultEffect,
+    },
+    {
+      // 1
+      name: "Pellet",
+      cost: 10,
+      rate: towerRates.slow,
+      damage: 20,
+      range: towerRanges["60"],
+      sellCost: 7,
+      sprite: sprite.defaultTowerSprite,
+      critical: 0.1, // une chance sur dix de faire un critique
+      effect: defaultEffect,
+    },
+    {
+      // 2
+      name: "Pellet",
+      cost: 20,
+      rate: towerRates.slow,
+      damage: 40,
+      range: towerRanges["60"],
+      sellCost: 15,
+      sprite: sprite.defaultTowerSprite,
+      critical: 0.1, // une chance sur dix de faire un critique
+      effect: defaultEffect,
+    },
+    {
+      // 3
+      name: "Pellet",
+      cost: 40,
+      rate: towerRates.slow,
+      damage: 80,
+      range: towerRanges["60"],
+      sellCost: 30,
+      sprite: sprite.defaultTowerSprite,
+      critical: 0.1, // une chance sur dix de faire un critique
+      effect: defaultEffect,
+    },
+    {
+      // 4
+      name: "Pellet",
+      cost: 80,
+      rate: towerRates.slow,
+      damage: 160,
+      range: towerRanges["60"],
+      sellCost: 60,
+      sprite: sprite.defaultTowerSprite,
+      critical: 0.1, // une chance sur dix de faire un critique
+      effect: defaultEffect,
+    },
+    {
+      // 5
+      name: "Sniper",
+      cost: 120,
+      rate: towerRates.slow,
+      damage: 400,
+      range: towerRanges["180"],
+      sellCost: 30,
+      sprite: sprite.defaultTowerSprite,
+      critical: 0.1, // une chance sur dix de faire un critique
+      effect: defaultEffect,
+    },
+  ],
+  [
+    {
+      name: "Squirt",
+      cost: 15,
+      rate: 2 / 60, // deux tirs par seconde
+      damage: 5,
       range: space.boxSize[0] * 3,
       sellCost: 10,
       sprite: sprite.defaultTowerSprite,
-      critical: 0.1, // une chance sur dix de faire un critique
+      critical: 0.05,
       effect: defaultEffect,
     },
   ],

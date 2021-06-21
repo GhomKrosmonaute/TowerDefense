@@ -6,6 +6,27 @@ export const boardSize: Vector = [
   boxSize[1] * boardBoxes[1],
 ]
 
+export type Zone = [...start: Vector, ...end: Vector]
+
+export function createZone(v1: Vector, v2: Vector, v2AsSize = false): Zone {
+  return [...v1, ...(v2AsSize ? add(v1, v2) : v2)]
+}
+
+export function spawnZone(): Zone {
+  return zoneToScreen(createZone([0, 0], [1, 9]))
+}
+
+export function boxToScreen(v: Vector): Vector {
+  return add(mult(v, boxSize), boardPosition())
+}
+
+export function zoneToScreen(z: Zone): Zone {
+  return createZone(
+    boxToScreen(z.slice(0, 2) as Vector),
+    boxToScreen(z.slice(2) as Vector)
+  )
+}
+
 export function boardPosition(): Vector {
   return sticky([width / 2 - boardSize[0] / 2, height / 2 - boardSize[1] / 2])
 }
@@ -27,12 +48,14 @@ export function mouse(): Vector {
   return [mouseX, mouseY]
 }
 
-export function stickyMouse(): Vector {
-  return sticky(
-    max(
-      min(mouse(), sub(add(boardPosition(), boardSize), div(boxSize, [3, 3]))),
-      add(boardPosition(), div(boxSize, [3, 3]))
-    )
+export function boardStickyMouse(): Vector {
+  return sticky(innerBoard(mouse()))
+}
+
+export function innerBoard(v: Vector): Vector {
+  return max(
+    min(v, sub(add(boardPosition(), boardSize), div(boxSize, [3, 3]))),
+    add(boardPosition(), div(boxSize, [3, 3]))
   )
 }
 

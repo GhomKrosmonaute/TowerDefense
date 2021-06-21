@@ -151,7 +151,7 @@ export class Tower implements space.Positionable, space.Displayable {
   }
 
   draw() {
-    if (this.position.toString() === space.stickyMouse().toString())
+    if (this.position.toString() === space.boardStickyMouse().toString())
       this.drawRange()
     this.level.sprite(this.angle, this.position)
   }

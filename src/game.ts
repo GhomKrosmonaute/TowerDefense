@@ -31,6 +31,7 @@ export default class Game {
     background(0)
 
     drawBoard()
+    //drawSpawn()
     drawSelectionRect()
     drawPositionableItems()
 
@@ -42,7 +43,7 @@ export default class Game {
   keyReleased() {}
 
   mousePressed() {
-    this.pressedAt = space.stickyMouse()
+    this.pressedAt = space.boardStickyMouse()
   }
 
   mouseReleased() {
@@ -51,7 +52,7 @@ export default class Game {
     if (selection) {
       this.selectedTower = selection
     } else {
-      const releasedAt = space.stickyMouse()
+      const releasedAt = space.boardStickyMouse()
 
       if (
         this.pressedAt?.toString() === releasedAt.toString() &&
@@ -68,7 +69,7 @@ export default class Game {
             )
         ) {
           space.board.add(
-            new tower.Tower(this, space.stickyMouse(), this.selectedTower)
+            new tower.Tower(this, space.boardStickyMouse(), this.selectedTower)
           )
           //delete this.selectedTower
         }
@@ -84,10 +85,16 @@ function drawBoard() {
   rect(...space.boardPosition(), ...space.boardSize)
 }
 
+// function drawSpawn() {
+//   noStroke()
+//   fill(50)
+//   rect(...space.spawnZone())
+// }
+
 function drawSelectionRect() {
   noStroke()
   fill(40)
-  rect(...space.stickyMouse(), ...space.boxSize)
+  rect(...space.boardStickyMouse(), ...space.boxSize)
 }
 
 function drawPositionableItems() {

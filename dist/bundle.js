@@ -276,7 +276,7 @@ var app = (() => {
   function drawPowers() {
   }
 
-  // src/game.ts
+  // src/Game.ts
   var Game = class {
     constructor() {
       this.life = 20;

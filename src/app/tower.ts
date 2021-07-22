@@ -5,7 +5,7 @@ import * as sprite from "./sprite"
 import Game from "../game"
 
 export const defaultEffect: TowerEffect = (game, weapon, enemy) => {
-  enemy.life -= weapon.damage * game.damageMultiplier
+  enemy.life -= weapon.damage * game.damage.value
 }
 
 export const towerRates = {

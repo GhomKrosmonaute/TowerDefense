@@ -4,22 +4,23 @@ import * as bonus from "./app/bonus"
 import * as space from "./app/space"
 import * as clock from "./app/clock"
 import * as shop from "./app/shop"
+import * as buff from "./app/buff"
 
 export default class Game {
-  life = 20
-  money = 100
   score = 0
+  money = 100
   time = 0
-  bonuses = []
+
+  life = new buff.BuffAbleNumber(20)
+  damage = new buff.BuffAbleNumber(1)
+
+  bonuses: bonus.Bonus[] = []
+  powers: power.Power[] = []
 
   selectedTower?: tower.BaseTower
   pressedAt?: space.Vector
 
   private lastTimeGiven = Date.now()
-
-  get damageMultiplier(): number {
-    return 1
-  }
 
   constructor() {
     space.board.clear()
